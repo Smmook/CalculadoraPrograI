@@ -72,8 +72,8 @@ int main()
         try {
             float res{operate(a, b, funciones.at(sel))};
             cout << "\nResultado: " << res << "\n\n";
-        } catch(domain_error e) {
-            cout << "No se puede dividir por 0!\n";
+        } catch(domain_error const&) {
+            cout << "No se puede dividir por 0!\n\n";
         }
 
     } while (1);

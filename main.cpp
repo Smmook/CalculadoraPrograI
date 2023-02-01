@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <functional>
+#include <array>
 
 using namespace std;
 
@@ -9,6 +10,7 @@ float operate(float a, float b, const function<float (float, float)> &op) {
     return op(a, b);
 }
 
+/** funciones
 auto sumar = [](float a, float b) -> float {
     return a+b;
 };
@@ -25,15 +27,35 @@ auto dividir = [](float a, float b) -> float {
     if (b == 0.f) throw domain_error("No se puede dividir por 0");
     return a/b;
 };
+**/
 
 int main()
 {
     const string menu{"Selecciona una opcion:\n"
-                      "1. Sumar\n"
-                      "2. Restar\n"
-                      "3. Multiplicar\n"
-                      "4. Dividir\n"
-                      "5. Salir\n"};
+                      "0. Sumar\n"
+                      "1. Restar\n"
+                      "2. Multiplicar\n"
+                      "3. Dividir\n"
+                      "4. Salir\n"};
+
+    array<function<float (float, float)>, 4> funciones;
+    funciones.at(0) = [](float a, float b) -> float {
+        return a+b;
+    };
+
+    funciones.at(1) = [](float a, float b) -> float {
+        return a-b;
+    };
+
+    funciones.at(2) = [](float a, float b) -> float {
+        return a*b;
+    };
+
+    funciones.at(3) = [](float a, float b) -> float {
+        if (b == 0.f) throw domain_error("No se puede dividir por 0");
+        return a/b;
+    };
+
     float a, b;
     int sel;
 
@@ -41,36 +63,18 @@ int main()
         do {
             cout << menu << endl;
             cin >> sel;
-        } while (sel < 1 || sel > 5);
-        if (sel == 5) break;
+        } while (sel < 0 || sel > 4);
+        if (sel == 4) break;
         cout << "Introduce un numero: ";
         cin >> a;
         cout << "Introduce otro numero: ";
         cin >> b;
-        float res{0.f};
-        switch (sel) {
-        case 1:
-            res = operate(a, b, sumar);
-            break;
-        case 2:
-            res = operate(a, b, restar);
-            break;
-        case 3:
-            res = operate(a, b, multiplicar);
-            break;
-        case 4:
-            try {
-                res = operate(a, b, dividir);
-            } catch(domain_error e) {
-                cout << "No se puede dividir por cero!\n";
-            }
-            break;
-        default:
-            cout << "Error" << endl;
-            break;
+        try {
+            float res{operate(a, b, funciones.at(sel))};
+            cout << "\nResultado: " << res << "\n\n";
+        } catch(domain_error e) {
+            cout << "No se puede dividir por 0!\n";
         }
-
-        cout << "\nResultado: " << res << "\n\n";
 
     } while (1);
 

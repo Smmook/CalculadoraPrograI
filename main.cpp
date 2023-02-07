@@ -1,4 +1,4 @@
-// Trabajo para matrícula Progra I
+// Diego Arenas Suárez
 
 #include <iostream>
 #include <functional>
@@ -9,25 +9,6 @@ using namespace std;
 float operate(float a, float b, const function<float (float, float)> &op) {
     return op(a, b);
 }
-
-/** funciones
-auto sumar = [](float a, float b) -> float {
-    return a+b;
-};
-
-auto restar = [](float a, float b) -> float {
-    return a-b;
-};
-
-auto multiplicar = [](float a, float b) -> float {
-    return a*b;
-};
-
-auto dividir = [](float a, float b) -> float {
-    if (b == 0.f) throw domain_error("No se puede dividir por 0");
-    return a/b;
-};
-**/
 
 int main()
 {
